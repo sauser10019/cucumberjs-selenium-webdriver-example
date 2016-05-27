@@ -2,6 +2,7 @@
 
 var webdriver = require('selenium-webdriver');
 var assert = require("chai").assert;
+var expect = require("chai").expect;
 
 module.exports = function() {
 
@@ -9,12 +10,15 @@ module.exports = function() {
     this.World = require('../support/world.js').World;
 
 	this.Given(/^I am on the home page$/, function (callback) {
-		this.driver.get('http://www.ralphlauren.com');
-		this.driver.sleep(1000);
-		this.driver.getTitle().then(function(title){
-			assert.include(title, 'Ralph Lauren');
+		this.driver.get('http://www.ralphlauren.com').then(function(){
+			return this.driver.getTitle().then(function(title){
+				expect(title).to.include('Ralph Lauren');
+				
+			});
 		});
+		this.driver.sleep(1000);
 		callback();
+
 	});
 	this.Given(/^I go to the login page$/, function (callback) {
 		this.driver.findElement(
@@ -23,7 +27,6 @@ module.exports = function() {
 				  input.click();
 			});
 			this.driver.sleep(1000);
-		
 		callback();
 	});
 	this.Given(/^I sign in$/, function (callback) {
@@ -57,4 +60,4 @@ module.exports = function() {
 				});
 		callback();
 	});
-}
+};
