@@ -9,7 +9,7 @@ module.exports = function() {
     this.World = require('../support/world.js').World;
 
 	this.Given(/^I am on the home page$/, function (callback) {
-		this.driver.get('http://www.ralphlauren.com')
+		this.driver.get('http://www.ralphlauren.com');
 		this.driver.sleep(1000);
 		callback();
 	});
