@@ -1,7 +1,7 @@
 'use strict';
 
 var webdriver = require('selenium-webdriver');
-var expect = require('chai').expect;
+var assert = require("chai").assert;
 
 module.exports = function() {
 
@@ -11,6 +11,9 @@ module.exports = function() {
 	this.Given(/^I am on the home page$/, function (callback) {
 		this.driver.get('http://www.ralphlauren.com');
 		this.driver.sleep(1000);
+		this.driver.getTitle().then(function(title){
+			assert.include(title, 'Ralph Lauren');
+		});
 		callback();
 	});
 	this.Given(/^I go to the login page$/, function (callback) {
