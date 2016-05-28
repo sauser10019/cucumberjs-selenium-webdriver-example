@@ -31,11 +31,8 @@ module.exports = function(grunt) {
     },
 
     exec: {
-      cukes: {
-        command: 'node ' + path.join('node_modules', 'cucumber',  'bin', 'cucumber.js -f pretty -t @cuke -r features/step_definitions')
-      },
-      mocha: {
-        command: 'node ' + path.join('node_modules', 'mocha',  'bin', 'mocha features/tests/*.js')
+      run_cucumber_tests: {
+        command: 'node ' + path.join('node_modules', 'cucumber',  'bin', 'cucumber.js -f pretty -t @cuke')
       }
     }
 
@@ -45,10 +42,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-env');
 
-  grunt.registerTask('default', ['jshint', 'exec:cukes']);
-  grunt.registerTask('cukes', function(platform){
-      if(platform===null){ platform = 'phantom'; }
-      grunt.task.run('env:'+platform, 'jshint', 'exec:cukes');
-  });
-  grunt.registerTask('mocha', ['jshint', 'exec:mocha']);
+  grunt.registerTask('default', ['env:phantom', 'jshint', 'exec']);
+  grunt.registerTask('chrome', ['env:chrome', 'jshint', 'exec']);
+  grunt.registerTask('firefox', ['env:firefox', 'jshint', 'exec']);
+  grunt.registerTask('android', ['env:android', 'jshint', 'exec']);
+
 };
+  
