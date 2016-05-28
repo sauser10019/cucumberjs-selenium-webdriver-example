@@ -1,3 +1,4 @@
+@cuke
 Feature: Shopping cart on an e-commerce website
 
   Scenario: Sign in and sign out

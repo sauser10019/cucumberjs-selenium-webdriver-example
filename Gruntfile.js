@@ -15,6 +15,9 @@ module.exports = function(grunt) {
       },
       android: {
         PLATFORM: 'ANDROID'
+      },
+      phantom: {
+        PLATFORM: 'PHANTOM'
       }
     },
 
@@ -28,8 +31,11 @@ module.exports = function(grunt) {
     },
 
     exec: {
-      run_cucumber_tests: {
-        command: 'node ' + path.join('node_modules', 'cucumber',  'bin', 'cucumber.js -f pretty -t ~@ignore')
+      cukes: {
+        command: 'node ' + path.join('node_modules', 'cucumber',  'bin', 'cucumber.js -t @cuke')
+      },
+      mocha: {
+        command: 'node ' + path.join('node_modules', 'mocha',  'bin', 'mocha ./tests/*.js')
       }
     }
 
@@ -39,9 +45,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-env');
 
-  grunt.registerTask('default', ['jshint', 'exec']);
-  grunt.registerTask('chrome', ['env:chrome', 'jshint', 'exec']);
-  grunt.registerTask('firefox', ['env:firefox', 'jshint', 'exec']);
-  grunt.registerTask('android', ['env:android', 'jshint', 'exec']);
+  grunt.registerTask('default', ['env:phantom', 'jshint', 'exec:cukes']);
+  
+  grunt.registerTask('phantom', ['env:phantom', 'jshint', 'exec:cukes']);
+  grunt.registerTask('chrome', ['env:chrome', 'jshint', 'exec:cukes']);
+  grunt.registerTask('firefox', ['env:firefox', 'jshint', 'exec:cukes']);
+
+  grunt.registerTask('mocha', ['jshint', 'exec:mocha']);
 
 };

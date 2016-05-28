@@ -2,8 +2,7 @@
 
 var fs = require('fs');
 var webdriver = require('selenium-webdriver');
-//var platform = process.env.PLATFORM || "PHANTOM";
-var platform = process.env.PLATFORM || "CHROME";
+var platform = process.env.PLATFORM || "PHANTOM";
 
 var buildAndroidDriver = function() {
   return new webdriver.Builder().
