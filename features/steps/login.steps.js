@@ -9,52 +9,38 @@ module.exports = function() {
     var self = this;
     this.World = require('../support/world.js').World;
 
-	this.Given(/^I am on the home page$/, function (callback) {
+	this.Given(/^I am on the home page$/, function () {
+
 		this.driver.get('http://www.ralphlauren.com');
-		this.driver.sleep(1000);
-		//var title = this.driver.getTitle();
-		//expect(title).to.include('Ralph Lauren');
-		callback();
+		return this.driver.getTitle().then(function(title){
+			expect(title).to.include('Ralph Lauren');
+		});
 	});
-	this.Given(/^I go to the login page$/, function (callback) {
-		this.driver.sleep(1000);
-		this.driver.findElement(
-			webdriver.By.xpath("//ul[@id='utility-nav']/li[2]/a")).then(
-				function(input) {
+	this.Given(/^I go to the login page$/, function () {
+
+		return this.driver.findElement(
+			webdriver.By.xpath("//ul[@id='utility-nav']/li[2]/a")).then(function(input) {
 				  input.click();
 			});
-			this.driver.sleep(1000);
-		callback();
 	});
-	this.Given(/^I sign in$/, function (callback) {
-		this.driver.sleep(1000);
+	this.Given(/^I sign in$/, function () {
 		this.driver.findElement(
-			webdriver.By.id("emailId")).then(
-				function(input) {
-					input.sendKeys("jason.sauser@ralphlauren.com");
-				});
-		this.driver.sleep(1000);
+			webdriver.By.id("emailId")).then(function(input) {
+				input.sendKeys("jason.sauser@ralphlauren.com");
+			});
 		this.driver.findElement(
-			webdriver.By.id("passwd")).then(
-				function(input) {
-					input.sendKeys("1squidy1");
-				});
-		this.driver.sleep(1000);
-		this.driver.findElement(
-			webdriver.By.xpath("//form[@name='returningCustomer']/div/input")).then(
-				function(input) {
-					input.click();
-				});
-		this.driver.sleep(1000);
-		callback();
+			webdriver.By.id("passwd")).then(function(input) {
+				input.sendKeys("1squidy1");
+			});
+		return this.driver.findElement(
+			webdriver.By.xpath("//form[@name='returningCustomer']/div/input")).then(function(input) {
+				input.click();
+			});
 	});
-	this.Then(/^I sign out$/, function (callback) {
-		this.driver.sleep(1000);
-		this.driver.findElement(
-			webdriver.By.id("MyAccount-LogOutButton")).then(
-				function(input){
-					input.click();
-				});
-		callback();
+	this.Then(/^I sign out$/, function () {
+		return this.driver.findElement(
+			webdriver.By.id("MyAccount-LogOutButton")).then(function(input){
+				input.click();
+			});
 	});
 };
